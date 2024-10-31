@@ -1,0 +1,3 @@
+/home/tienphuckx/dev/c/load-txt-file/cmake-build-debug/CMakeFiles/load_txt_file.dir
+/home/tienphuckx/dev/c/load-txt-file/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/tienphuckx/dev/c/load-txt-file/cmake-build-debug/CMakeFiles/rebuild_cache.dir

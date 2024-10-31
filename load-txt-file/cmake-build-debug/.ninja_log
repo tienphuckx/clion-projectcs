@@ -1,0 +1,5 @@
+# ninja log v6
+0	33	1730358184660219345	CMakeFiles/load_txt_file.dir/main.c.o	f4025b45f2a16532
+33	56	1730358184693219081	load_txt_file	3577fcf57edf6b1e
+3	68	1730360755825691305	CMakeFiles/load_txt_file.dir/main.c.o	f4025b45f2a16532
+68	117	1730360755890692342	load_txt_file	3577fcf57edf6b1e
