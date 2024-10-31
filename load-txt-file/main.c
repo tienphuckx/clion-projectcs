@@ -13,12 +13,17 @@ int main(const int argc, char *argv[]) {
     int length = 0;
     char *filename = argv[1];
     char **words = loadfile(filename, &length);
+    if(!words){
+        fprintf(stderr, "Fail to load file %s\n", filename);
+        exit(1);
+    }
 
-    // display the first 100 file
+    // display the entire file
     printf("Loaded %d words\n", length);
     for(int i = 0; i < length; i++) {
         printf("%s\n", words[i]);
     }
+    printf("Done.");
     return 0;
 }
 
@@ -29,11 +34,11 @@ char ** loadfile(char * filename, int * len) {
         return NULL;
     }
 
-    int arrlen = STEPSIZE;
+    int arrlen = 0;
 
     // allocate space for STEPSIZE char*
     // each char* point to a string (foint to the first char of one line)
-    char **lines = (char **)malloc(arrlen * sizeof(char *));
+    char **lines = NULL;
 
     // read each line from the file
     char buf[1000];
