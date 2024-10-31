@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 const int STEPSIZE = 100;
-char ** loadfile(char * filename, int * len);
+char ** loadfile(char * filename);
 int main(const int argc, char *argv[]) {
     if(argc == 1) {
         printf(stderr, "Must provide a [filename] to read\n");
@@ -10,24 +10,22 @@ int main(const int argc, char *argv[]) {
     }
 
     // load the file into data structure
-    int length = 0;
     char *filename = argv[1];
-    char **words = loadfile(filename, &length);
+    char **words = loadfile(filename);
     if(!words){
         fprintf(stderr, "Fail to load file %s\n", filename);
         exit(1);
     }
 
     // display the entire file
-    printf("Loaded %d words\n", length);
-    for(int i = 0; i < length; i++) {
+    for(int i = 0; words[i] != NULL; i++) {
         printf("%s\n", words[i]);
     }
     printf("Done.");
     return 0;
 }
 
-char ** loadfile(char * filename, int * len) {
+char ** loadfile(char * filename) {
     FILE *f = fopen(filename, "r");
     if(!f) {
         fprintf(stderr, "Could not open file %s\n", filename);
@@ -65,7 +63,7 @@ char ** loadfile(char * filename, int * len) {
         // now we need to remove the \n
         // keep the \0
         // assign \n = \0
-        buf[strlen(buf) - 1] = '\0';
+        if(buf[strlen(buf)] == '\n') buf[strlen(buf)] = '\0';
 
         // get new length of buf
         int slen = strlen(buf);
@@ -80,7 +78,23 @@ char ** loadfile(char * filename, int * len) {
         lines[i] = line;
         i++;
     }
+    
+    if(i == arrlen) {
+        // realloc will return a new address
+        char **newarr =  newarr = (char **)realloc(lines, sizeof(char *) * (arrlen + 1));
+        if(!newarr) {
+            fprintf(stderr, "Fail to realloc(), Out of memory for newarr\n");
+            exit(1);
+        }
+        lines = newarr;
+    }
+    
+    // Put NULL at the very last element to mark the end of the array
+    lines[i] = NULL;
 
-    *len = i; // set leng
+    // close the file
+    fclose(f);
+
+    // return the array of strings
     return lines;
 }
